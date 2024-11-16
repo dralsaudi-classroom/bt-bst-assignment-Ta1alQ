@@ -122,8 +122,6 @@ public class BT<T> {
 	            }
 	        }
 
-	        
-	        System.out.println("BT Says " + count);
 	        return count; 
 	    }
 }
