@@ -1,11 +1,45 @@
 package com.example.project;
 
+import java.util.Stack;
+
 public class TreeUser {
     public static <T> int countLeaves(BT<T> bt) {
-        throw new UnsupportedOperationException("Not supported yet.");
-		// Write the method countLeafs that should return the number of leaf nodes in the tree. A leaf node is a node that has no children.
-        // assume the following method exists in the ADT: isLeaf (boolean flag): requires: Binary tree is not empty.
-        // input: None. results: if the current node of the binary tree is a leaf then flag is set to true otherwise it is set to false. output: flag.
-        // you can't call countLeaves from BT.java
+        int count = 0;
+
+        if (bt.empty()) {
+            return count; // Return 0 if the tree is empty
+        }
+
+        Stack<BT<T>> stack = new Stack<>();
+        bt.find(Relative.Root); // Set current to the root node
+        stack.push(bt);
+
+        BT<T> current = bt;
+        
+        while (!stack.isEmpty()) {
+        	stack.pop();
+            // Check if the current node is a leaf
+            if (current.isLeaf()) {
+                count++;
+            } else {
+               if(current.find(Relative.RightChild)) {
+            	   stack.push(current);
+            	   current.find(Relative.Parent);
+               }
+               if(current.find(Relative.LeftChild)) {
+            	   if(current.isLeaf())
+            		   count++;
+               }
+               else { 
+            	   current = stack.pop();
+               }
+            }
+        }
+       
+
+        
+    
+        System.out.println("TreeUser Says " + count);
+        return count; // Return total count of leaves
     }
 }
